@@ -19,12 +19,14 @@ Notes
 - [Problem Definition](#problem-definition)
 - [Process](#process)
 - [Input Data](#input-data)
-- [Data Pre-processor](#data-pre-processor)
+- [Data Loader](#data-loader)
+- [Data Pre-Processor](#data-pre-processor)
 - [Feature Extractor](#feature-extractor)
 - [Machine Learning Model](#machine-learning-model)
 - [Evaluator](#evaluator)
-- [Training](#training)
-- [Testing](#testing)
+- [Training Phase](#training-phase)
+- [Testing Phase](#testing-phase)
+- [Prediction Phase](#prediction-phase)
 - [Possible Improvements](#possible-improvements)
 - [References](#references)
 
@@ -44,7 +46,7 @@ Notes
 The command below creates the "isdcnd" conda environment, which stands for "Intro to Self-Driving Cars Nanodegree".
 
 	$ cd ~/traffic_light_classifier/install
-	$ conda env create --file environment.yaml   # Creates isdcnd environement
+	$ conda env create --file environment.yaml   # Creates isdcnd environment
 
 4 - Activate environment.
 
@@ -121,7 +123,7 @@ The process followed in this project was based on reference [2].
 
 ### Training Phase
 
-- After the initial design phase, the classifier went tru several training loops. These training loops were run on an training dataset. Images in this dataset had already been labeled with their respective color.
+- After the initial design phase, the classifier went tru several training loops. These training loops were run on a training dataset. Images in this dataset had already been labeled with their respective color.
 
 - An **evaluator** checked the classifier performance after each loop. The classifier design or internal parameters were updated each time project requirements were not met.
 
@@ -177,7 +179,7 @@ The data loader loads images in a format the classifier can manipulate. 2 loadin
 		path/to/training/            path/to/test/
 		    green/                       green/
 	 	    red/                         red/
-	  	    yellow/                      yellow/
+		    yellow/                      yellow/
 	
 	Note that labels are one-hot encoded when loaded into memory.
 	  	  
@@ -299,5 +301,5 @@ Following the training/testing phases, the classifier can now be run on simple i
 # References
 
 [1] Udacity's Introduction to Self-Driving Cars Nanodegree. https://www.udacity.com/course/intro-to-self-driving-cars--nd113 <br>
-[2] Udacity's Introduction to Self-Driving Cars Nanodegree, Part 8 - Computer Vision and Machine Learning, Lesson 1 - Computer Vision and Classification, Section 7 - Image Classification Pipeline.
+[2] Udacity's Introduction to Self-Driving Cars Nanodegree, Part 8 - Computer Vision and Machine Learning, Lesson 1 - Computer Vision and Classification, Section 7 - Image Classification Pipeline. <br>
 [3] Serrano, Luis, Grokking Machine Learning, Manning Editions.
