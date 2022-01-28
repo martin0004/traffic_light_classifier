@@ -1,0 +1,17 @@
+All images in the /test and /training directories come from the MIT self-driving car course [1] and are licensed under a Creative Commons
+Attribution-ShareAlike 4.0 International License [2].
+
+The information above comes from reference [3].
+
+References for this license
+
+[1] MIT self-driving car course
+https://selfdrivingcars.mit.edu/
+
+[2] Creative Commons Attribution-ShareAlike 4.0 International License
+https://creativecommons.org/licenses/by-sa/4.0/
+
+[3] Udacity's Introduction to Self-Driving Cars Nanodegree, Part 8 - Computer Vision and Machine Learning, Project - Traffic Light Classifier, Section 3 - Notebook - Traffic Light Classifier.
+https://github.com/udacity/iSDC-P5-traffic-light-classifier-starter-code/blob/master/Traffic_Light_Classifier.ipynb
+
+

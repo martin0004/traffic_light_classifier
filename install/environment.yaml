@@ -1,0 +1,11 @@
+name: isdcnd     # Intro to Self-Driving Cars Nanodegree
+dependencies:
+  - dash
+  - jupyterlab
+  - numpy
+  - opencv
+  - pandas
+  - plotly
+  - tabulate   # Required by pandas.Dataframe.to_markdown()
+
+
