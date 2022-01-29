@@ -43,25 +43,25 @@ Notes
 
 3 - Create conda environment for this project.
 
-The command below creates the "isdcnd" conda environment, which stands for "Intro to Self-Driving Cars Nanodegree".
+The command below creates the "tlc" conda environment, which stands for "Traffic Light Classifier".
 
 	$ cd ~/traffic_light_classifier/install
-	$ conda env create --file environment.yaml   # Creates isdcnd environment
+	$ conda env create --file environment.yaml   # Creates tlc environment
 
 4 - Activate environment.
 
-	$ conda activate isdcnd
+	$ conda activate tlc
 
 5 - Run the classifier on a dummy image.
 
-	(isdcnd) $ cd ~/traffic_light_classifer/src
-	(isdcnd) $ python3 classify.py testme.jpg
+	(tlc) $ cd ~/traffic_light_classifer/src
+	(tlc) $ python3 classify.py testme.jpg
 	green
 
 6 - [OPTIONAL] Open the Jupyter Notebooks which were used for designing & training the classifier.
 
-	(isdcnd) $ cd ~/traffic_light/classifier
-	(isdcnd) $ jupyter lab
+	(tlc) $ cd ~/traffic_light/classifier
+	(tlc) $ jupyter lab
 	
 	then navigate to /dev/design.ipynb
 	             and /dev/training.ipynb
@@ -288,8 +288,8 @@ The trained classifier was then ran on the testing dataset and requirements were
 
 Following the training/testing phases, the classifier can now be run on simple images similar to the ones in the training/testing datasets.
 
-	(isdcnd) $ cd ~/traffic_light_classifer/src
-	(isdcnd) $ python3 classify.py testme.jpg
+	(tlc) $ cd ~/traffic_light_classifer/src
+	(tlc) $ python3 classify.py testme.jpg
 	green
 
 # Possible Improvements

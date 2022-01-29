@@ -1,4 +1,4 @@
-name: isdcnd     # Intro to Self-Driving Cars Nanodegree
+name: tlc     # Traffic Light Classifier
 dependencies:
   - dash
   - jupyterlab
