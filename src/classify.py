@@ -340,8 +340,8 @@ class MachineLearningModel(object):
         df_out = pd.DataFrame()
         
         # Prediction        
-        df_out["y_bar"] = self.w1*df_in["x1"] + self.w2*df_in["x2"]
-        df_out["y_bar"] = df_out["y_bar"].apply(lambda x: self.get_max_score(x))
+        df_out["y_hat"] = self.w1*df_in["x1"] + self.w2*df_in["x2"]
+        df_out["y_hat"] = df_out["y_hat"].apply(lambda x: self.get_max_score(x))
         
         # Return dataframe
         return df_out
@@ -899,7 +899,7 @@ def main(argv):
     
     # Replace one-hot encoded prediction by word
     
-    encoded_label = df_prediction["y_bar"][0]    
+    encoded_label = df_prediction["y_hat"][0]    
     index_max = np.argmax(encoded_label)    
     label = CLASSES[index_max]
     
