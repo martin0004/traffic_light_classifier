@@ -5,12 +5,12 @@ This project develops a traffic light classifier for a self-driving car.
 
 This is the 5th project in Udacity's Introduction to Self-Driving Cars Nanodegree [1].
 
-<img src="images/report/image_classifier.png" width="700"/> 
+<img src="images/report/problem.png" width="600"/> 
 
 Notes
 
-- My original report for this project was a Jupyter notebook which was delivered to Udacity in January 2021. The Github repository you are reading is an improved version of this initial project.
-- This project had to be completed without using tools like scikit-learn and PyTorch. So no neural networks in here...
+- My original report for this project was a Jupyter notebook which was delivered to Udacity in January 2021. This repository is an improved version of this initial project.
+- In this project, students had to engineer their own features, build their own dataloaders and ML models. Therefore, tasks had to be completed without using tools like scikit-learn, PyTorch or Keras.
 
 # Table of Content
 
@@ -90,13 +90,19 @@ src/
     testme.jpg                   Dummy image for testing the classifier. 
 ```
 
+# Process
+
+The image below shows the overall process used to develop the classifier.
+
+<img src="images/report/process.png" width="700"/> 
+
 # Problem Definition
 
 ### Problem
 
 A traffic light image classifier had to be developed for a self-driving car. This classifier is able to predict whether the traffic light is "red", "yellow" or "green" on simple traffic light images.
 
-<img src="images/report/image_classifier.png" width="700"/> 
+<img src="images/report/problem.png" width="600"/> 
 
 ### Requirements
 
@@ -105,37 +111,6 @@ The classifier had to meet the following criteria.
 - Accuracy > 90 %.
 - Never classify a red light as green.
 
-
-# Process
-
-The process followed in this project was based on reference [2].
-
-### Design Phase
-
-- The **classifier** was coded by developing 3 components.
-
-	- A **data pre-processor**, which standardizes every input image.
-	- A **feature extractor**, which identifies features in every image.
-	- A **machine learning model**, which combines an image features to make a prediction.
-
-- Besides the classifier, a **data loader** was also coded. This loader takes an image file and loads it into computer memory in a form the classifier can understand.
-
-
-### Training Phase
-
-- After the initial design phase, the classifier went tru several training loops. These training loops were run on a training dataset. Images in this dataset had already been labeled with their respective color.
-
-- An **evaluator** checked the classifier performance after each loop. The classifier design or internal parameters were updated each time project requirements were not met.
-
-### Testing Phase
-
-- If requirements were met in the training phase, a single run was performed on the testing dataset, reusing the parameters selected during training. If requirements were not met, the process went back to the training phase.
-
-### Prediction Phase
-
-- If the testing run was successful, the classifier could then be used to predict colors of traffic light images for which labels were unknown.
-
-<img src="images/report/process.png" width="700"/> 
 
 
 # Input Data
@@ -165,7 +140,16 @@ Images are divided into the following datasets.
 | Testing  | 20 %    |     297 |   107 |      9 | 181 | 
 | Total    |         |    1484 |       |        |     |
 
-# Data Loader
+
+
+# Design
+
+The classifier is made of the following components. These components are similar to the pipeline from reference [2].
+
+<img src="images/report/components.png" width="600"/> 
+
+
+### Data Loader
 
 The data loader loads images in a format the classifier can manipulate. 2 loading methods can be used.
 
@@ -194,38 +178,32 @@ The data loader loads images in a format the classifier can manipulate. 2 loadin
 
 
 
-# Data Pre-Processor
+### Data Pre-Processor
 
 The data pre-processor simply resizes all images to a square shape of 32 x 32 pixels.
 
-<img src="images/report/preprocessing.png" width="700"/>
+<img src="images/report/preprocessing.png" width="600"/>
 
-# Feature Extractor
+### Feature Extractor
 
-Two features were extracted from each image and reused by the machine learning model.
+The feature extractor identifies features in each image. These features are then reused by the machine learning model.
 
-### Feature 1: Brightness Vector
+##### Feature 1: Brightness Vector
 
-This feature is a 3-item vector which represents the brightness of each 1/3 of an image (top part / center part / bottom part).
-
-Image sides were cropped, keeping only a center band. This eliminated most of the sky, keeping only the light and its frame. The remaining image was converted to HSV colorspace. Brightness values (v) were summed for each 1/3 of the image. The vector was then normalized.
+This feature is a 3-item vector which represents the brightness distribution over an image. Brightness was defined as the sum of v values (in HSV colorspace) over each 1/3 of an image.
 
 <img src="images/report/brightness_vector.png" width="700"/>
 
 
-### Feature 2: Color Vector
+##### Feature 2: Color Vector
 
-This feature is a 3-item vector containing the number of "red", "yellow" and "green" pixels in an image.
-
-Range of hue (h) and brightness (v) values were obtained by selecting pixels on some red, yellow and green lights in the training dataset. These values were plotted in violin charts. Ranges were then selected for building color masks. No mask was built for saturation values (s).
-
-Images were cropped with the same bands as the brightness vector. Cropped images were converted to HSV colorspace and masked, keeping only pixels pixels maching the red-yellow-green h-v values found above. Remaining pixels were counted, stored in a vector which was then normalized.
+This feature is a 3-item vector containing the number of "red", "yellow" and "green" pixels in an image. Range of hue (h) and brightness (v) values were obtained by selecting pixels on some red, yellow and green lights in the training dataset, then used to create color masks.
 
 <img src="images/report/h_value_ranges.png" width="700"/>
 <img src="images/report/v_value_ranges.png" width="700"/>
 <img src="images/report/color_vector.png" width="700"/>
 
-# Machine Learning Model
+### Machine Learning Model
 
 Features were combined in a simple machine learning model in order to predict the label of an image.
 
@@ -242,13 +220,9 @@ where:
 | max_score(x)                 | Function which turns the highest value of a vector to 1 <br> and other values to 0. |
 
 
-# Evaluator
+# Train
 
-An evaluator was coded to calculate the classifier accuracy following a training run. Metrics derived by this evaluator are available in sections "Training" and "Testing".
-
-# Training Phase
-
-The classifier parameters were adjusted during a model training phase. Predictions were made using the classifier for several parameter combinations.
+The classifier parameters were adjusted during a training phase. Predictions were made using the classifier for several parameter combinations.
 
 Parameters of run #9 met the project requirements. Evaluation metrics for this run are shown in a chart below.
 
@@ -278,15 +252,15 @@ Parameters of run #9 met the project requirements. Evaluation metrics for this r
 
 <img src="images/report/training_metrics.png" width="700"/>
 
-# Testing Phase
+# Test
 
 The trained classifier was then ran on the testing dataset and requirements were still met.
 
 <img src="images/report/testing_metrics.png" width="700"/>
 
-# Prediction Phase
+# Deployment
 
-Following the training/testing phases, the classifier can now be run on simple images similar to the ones in the training/testing datasets.
+Following successful testing, the classifier can now be run on simple images similar to the ones in the training/testing datasets.
 
 	(tlc) $ cd ~/traffic_light_classifer/src
 	(tlc) $ python3 classify.py testme.jpg
