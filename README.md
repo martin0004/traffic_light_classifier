@@ -7,7 +7,7 @@ This is the 5th project in Udacity's Introduction to Self-Driving Cars Nanodegre
 
 Please note that in this project students had to engineer their own features, build their own dataloaders and code their ML model. Librairies and tools such as scikit-learn, PyTorch or Keras could not be used.
 
-<img src="images/report/problem.png" width="600"/> 
+<img src="images/report/problem.png"/> 
 
 
 # Table of Content
@@ -110,7 +110,7 @@ src/
 
 A traffic light image classifier had to be developed for a self-driving car. This classifier is able to predict whether the traffic light is "red", "yellow" or "green" on simple traffic light images.
 
-<img src="images/report/problem.png" width="600"/> 
+<img src="images/report/problem.png"/> 
 
 # Requirements
 
@@ -153,7 +153,7 @@ The traffic light images were provided to students already split in a training a
 
 The classifier pipeline is made of the following components. These components are similar to the pipeline from reference [2].
 
-<img src="images/report/components.png" width="600"/> 
+<img src="images/report/components.png"/> 
 
 
 # Data Loader
