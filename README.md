@@ -3,29 +3,44 @@
 
 This project develops a traffic light classifier for a self-driving car.
 
-This is the 5th project in Udacity's Introduction to Self-Driving Cars Nanodegree [1].
+This is the 5th project in Udacity's Introduction to Self-Driving Cars Nanodegree [1]. This README serves as a final report for the project.
+
+Please note that in this project students had to engineer their own features, build their own dataloaders and code their ML model. Librairies and tools such as scikit-learn, PyTorch or Keras could not be used.
 
 <img src="images/report/problem.png" width="600"/> 
 
-Notes
-
-- My original report for this project was a Jupyter notebook which was delivered to Udacity in January 2021. This repository is an improved version of this initial project.
-- In this project, students had to engineer their own features, build their own dataloaders and ML models. Therefore, tasks had to be completed without using tools like scikit-learn, PyTorch or Keras.
 
 # Table of Content
 
+INSTALL
+
 - [Install](#install)
 - [Project Files](#project-files)
-- [Process](#process)
-- [Problem Definition](#problem-definition)
+
+PROBLEM DEFINITION
+
+- [Problem](#problem)
+- [Requirements](#requirements)
+
+DATA
+
 - [Input Data](#input-data)
-- [Design](#design)
-	- [Data Loader](#data-loader)
-	- [Data Pre-Processor](#data-pre-processor)
-	- [Feature Extractor](#feature-extractor)
-	- [Machine Learning Model](#machine-learning-model)
-- [Train](#train)
-- [Test](#test)
+- [Data Exploration](#data-exploration)
+- [Datasets](#datasets)
+
+DESIGN
+
+- [Pipeline](#pipeline)
+- [Data Loader](#data-loader)
+- [Data Pre-Processor](#data-pre-processor)
+- [Feature Extractor](#feature-extractor)
+- [Machine Learning Model](#machine-learning-model)
+    - [Model Selection](#model-selection)
+    - [Hyperparameter Search](#hyperparameter-search)
+	- [Testing](#testing)
+	
+CONCLUSION
+
 - [Deployment](#deployment)
 - [Possible Improvements](#possible-improvements)
 - [References](#references)
@@ -90,21 +105,14 @@ src/
     testme.jpg                   Dummy image for testing the classifier. 
 ```
 
-# Process
 
-The image below shows the overall process used to develop the classifier.
-
-<img src="images/report/process.png" width="700"/> 
-
-# Problem Definition
-
-### Problem
+# Problem
 
 A traffic light image classifier had to be developed for a self-driving car. This classifier is able to predict whether the traffic light is "red", "yellow" or "green" on simple traffic light images.
 
 <img src="images/report/problem.png" width="600"/> 
 
-### Requirements
+# Requirements
 
 The classifier had to meet the following criteria.
 
@@ -115,14 +123,13 @@ The classifier had to meet the following criteria.
 
 # Input Data
 
-### Raw Data
-
-1484 images are available in directory `images/traffic_light_images` and were used for developing the classifier. Here are some sample images from this directory.
+The dataset used in this project is made of images from the MIT's Self-Driving Car Course [4][5]. The dataset contains 1484 traffic light images which are available in directory`images/traffic_light_images` .
 
 <img src="images/report/traffic_lights.png" width="700"/>
 
+# Data Exploration
 
-Images have the following properties.
+The following observations were made during the data exploration phase.
 
 - All images are pictures of 3-light traffic lights with one light illuminated.
 - The light order is always the same: red light at the top, yellow in the middle, green at the bottom.
@@ -130,9 +137,9 @@ Images have the following properties.
 - Image files are relatively small (< 10 kB).
 - Images have different sizes, which can range from approximately 17x37 (smallest) to 111x214 (largest).
 
-### Datasets
+# Datasets
 
-Images are divided into the following datasets.
+The traffic light images were provided to students already split in a training and testing datasets. Here are some stats regarding this split.
 
 | Dataset  | % Total | Total   | Green | Yellow | Red |
 |----------|---------|---------|-------|--------| ----|
@@ -142,14 +149,14 @@ Images are divided into the following datasets.
 
 
 
-# Design
+# Pipeline
 
-The classifier is made of the following components. These components are similar to the pipeline from reference [2].
+The classifier pipeline is made of the following components. These components are similar to the pipeline from reference [2].
 
 <img src="images/report/components.png" width="600"/> 
 
 
-### Data Loader
+# Data Loader
 
 The data loader loads images in a format the classifier can manipulate. 2 loading methods can be used.
 
@@ -178,24 +185,24 @@ The data loader loads images in a format the classifier can manipulate. 2 loadin
 
 
 
-### Data Pre-Processor
+# Data Pre-Processor
 
 The data pre-processor simply resizes all images to a square shape of 32 x 32 pixels.
 
 <img src="images/report/preprocessing.png" width="600"/>
 
-### Feature Extractor
+# Feature Extractor
 
 The feature extractor identifies features in each image. These features are then reused by the machine learning model.
 
-##### Feature 1: Brightness Vector
+### Feature 1: Brightness Vector
 
 This feature is a 3-item vector which represents the brightness distribution over an image. Brightness was defined as the sum of v values (in HSV colorspace) over each 1/3 of an image.
 
 <img src="images/report/brightness_vector.png" width="700"/>
 
 
-##### Feature 2: Color Vector
+### Feature 2: Color Vector
 
 This feature is a 3-item vector containing the number of "red", "yellow" and "green" pixels in an image. Range of hue (h) and brightness (v) values were obtained by selecting pixels on some red, yellow and green lights in the training dataset, then used to create color masks.
 
@@ -203,9 +210,11 @@ This feature is a 3-item vector containing the number of "red", "yellow" and "gr
 <img src="images/report/v_value_ranges.png" width="700"/>
 <img src="images/report/color_vector.png" width="700"/>
 
-### Machine Learning Model
+# Machine Learning Model
 
-Features were combined in a simple machine learning model in order to predict the label of an image.
+### Model Selection
+
+The model used in this project is a simple equation combining features to the predict the label of an image.
 
  ŷ = max_score(w<sub>1</sub> * x<sub>1</sub> + w<sub>2</sub> *  x<sub>2</sub>)
 
@@ -220,14 +229,14 @@ where:
 | max_score(x)                 | Function which turns the highest value of a vector to 1 <br> and other values to 0. |
 
 
-# Train
+### Hyperparameter Search
 
-The classifier parameters were adjusted during a training phase. Predictions were made using the classifier for several parameter combinations.
+An hyperparameter search was performed. Results are listed in the table below.
 
-Parameters of run #9 met the project requirements. Evaluation metrics for this run are shown in a chart below.
+Parameters of run #9 met the project requirements.
 
 
-| Training Parameters          | Description  |
+| Hyperparameters              | Description  |
 |------------------------------|--------------|
 | img_size                     | Image size when resizing <br> (used by data pre-processor). |
 | crop_left                    | Number of pixels removed on the left & right side of image <br> (used by feature extractor). |
@@ -250,11 +259,10 @@ Parameters of run #9 met the project requirements. Evaluation metrics for this r
 | 10 |         32 |          12 |          2 |    1 |    2 |      0.88  |                          0 |           |
 
 
-<img src="images/report/training_metrics.png" width="700"/>
 
-# Test
+### Testing
 
-The trained classifier was then ran on the testing dataset and requirements were still met.
+The model trained with parameters of run #9 was used to make predictions on the test dataset. project requirements were still met.
 
 <img src="images/report/testing_metrics.png" width="700"/>
 
@@ -276,4 +284,6 @@ Following successful testing, the classifier can now be run on simple images sim
 
 [1] Udacity's Introduction to Self-Driving Cars Nanodegree. https://www.udacity.com/course/intro-to-self-driving-cars--nd113 <br>
 [2] Udacity's Introduction to Self-Driving Cars Nanodegree, Part 8 - Computer Vision and Machine Learning, Lesson 1 - Computer Vision and Classification, Section 7 - Image Classification Pipeline. <br>
-[3] Serrano, Luis, Grokking Machine Learning, Manning Editions.
+[3] Serrano, Luis, Grokking Machine Learning, Manning Editions. <br>
+[4] MIT self-driving car course, https://selfdrivingcars.mit.edu/ <br>
+[5] Udacity, Instructions for this project, https://github.com/udacity/iSDC-P5-traffic-light-classifier-starter-code/blob/master/Traffic_Light_Classifier.ipynb
